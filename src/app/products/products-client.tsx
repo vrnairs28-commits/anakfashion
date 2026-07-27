@@ -36,8 +36,12 @@ export default function ProductsClient({
     // Custom Dropdown refs & open states
     const [isFabricDropdownOpen, setIsFabricDropdownOpen] = useState(false);
     const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
+    const [isColorDropdownOpen, setIsColorDropdownOpen] = useState(false);
+    const [colorSearchQuery, setColorSearchQuery] = useState('');
+
     const fabricRef = useRef<HTMLDivElement>(null);
     const sortRef = useRef<HTMLDivElement>(null);
+    const colorRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -46,6 +50,9 @@ export default function ProductsClient({
             }
             if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
                 setIsSortDropdownOpen(false);
+            }
+            if (colorRef.current && !colorRef.current.contains(event.target as Node)) {
+                setIsColorDropdownOpen(false);
             }
         }
         document.addEventListener('mousedown', handleClickOutside);
@@ -68,6 +75,11 @@ export default function ProductsClient({
         return Array.from(new Set(allColors));
     }, [initialProducts]);
 
+    const filteredColors = useMemo(() => {
+        if (!colorSearchQuery) return colors;
+        return colors.filter(col => col.toLowerCase().includes(colorSearchQuery.toLowerCase()));
+    }, [colors, colorSearchQuery]);
+
     const maxProductPrice = useMemo(() => {
         if (initialProducts.length === 0) return 20000;
         return Math.max(...initialProducts.map(p => p.price));
@@ -83,6 +95,7 @@ export default function ProductsClient({
         setMaxPrice(maxProductPrice);
         setSortBy('newest');
         setVisibleCount(8);
+        setColorSearchQuery('');
     };
 
     // Perform client-side filtering and sorting
@@ -237,8 +250,8 @@ export default function ProductsClient({
                                                     setIsFabricDropdownOpen(false);
                                                 }}
                                                 className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${selectedFabric === ''
-                                                        ? 'bg-rose-pink/5 text-rose-pink font-semibold'
-                                                        : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                    ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                    : 'text-dark-gray hover:bg-cream hover:text-gold'
                                                     }`}
                                             >
                                                 All Fabrics
@@ -252,8 +265,8 @@ export default function ProductsClient({
                                                         setIsFabricDropdownOpen(false);
                                                     }}
                                                     className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${selectedFabric === fab
-                                                            ? 'bg-rose-pink/5 text-rose-pink font-semibold'
-                                                            : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                        ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                        : 'text-dark-gray hover:bg-cream hover:text-gold'
                                                         }`}
                                                 >
                                                     {fab}
@@ -266,30 +279,78 @@ export default function ProductsClient({
                         </div>
 
                         {/* Colors */}
-                        <div className="mb-6">
+                        <div className="mb-6 relative" ref={colorRef}>
                             <h4 className="text-xs uppercase tracking-widest font-bold text-gold mb-3">Colors</h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-col gap-2 relative">
                                 <button
-                                    onClick={() => setSelectedColor('')}
-                                    className={`text-xs px-2.5 py-1.5 rounded-full border transition-all ${selectedColor === ''
-                                        ? 'border-gold bg-gold text-white font-medium shadow-sm'
-                                        : 'border-rose-pink/15 text-dark-gray bg-white'
-                                        }`}
+                                    type="button"
+                                    onClick={() => {
+                                        setIsColorDropdownOpen(!isColorDropdownOpen);
+                                        setColorSearchQuery('');
+                                    }}
+                                    className="w-full flex items-center justify-between bg-white border border-rose-pink/10 hover:border-gold rounded-lg p-2.5 text-sm text-dark-gray focus:outline-none transition-all cursor-pointer"
                                 >
-                                    All Colors
+                                    <span className="capitalize">{selectedColor || 'All Colors'}</span>
+                                    <ChevronDown className={`w-4 h-4 text-gold transition-transform duration-300 ${isColorDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                {colors.map(col => (
-                                    <button
-                                        key={col}
-                                        onClick={() => setSelectedColor(col)}
-                                        className={`text-xs px-2.5 py-1.5 rounded-full border transition-all ${selectedColor === col
-                                            ? 'border-gold bg-gold text-white font-medium shadow-sm'
-                                            : 'border-rose-pink/15 text-dark-gray bg-white hover:border-gold/50'
-                                            }`}
-                                    >
-                                        {col}
-                                    </button>
-                                ))}
+                                <AnimatePresence>
+                                    {isColorDropdownOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 5 }}
+                                            className="absolute left-0 right-0 mt-12 bg-white border border-rose-pink/15 rounded-lg shadow-xl z-30 flex flex-col overflow-hidden"
+                                        >
+                                            {/* Search input field */}
+                                            <div className="p-2 border-b border-rose-pink/5 sticky top-0 bg-white z-10">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Search color..."
+                                                    value={colorSearchQuery}
+                                                    onChange={(e) => setColorSearchQuery(e.target.value)}
+                                                    className="w-full pl-3 pr-3 py-1.5 bg-cream/35 border border-rose-pink/10 focus:outline-none focus:border-rose-pink text-xs text-dark-gray rounded-md"
+                                                />
+                                            </div>
+
+                                            {/* Options list */}
+                                            <div className="max-h-48 overflow-y-auto flex flex-col">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSelectedColor('');
+                                                        setIsColorDropdownOpen(false);
+                                                    }}
+                                                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${selectedColor === ''
+                                                            ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                            : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                        }`}
+                                                >
+                                                    All Colors
+                                                </button>
+                                                {filteredColors.length === 0 ? (
+                                                    <div className="text-[10px] text-muted-gray text-center py-3">No matching colors</div>
+                                                ) : (
+                                                    filteredColors.map(col => (
+                                                        <button
+                                                            key={col}
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setSelectedColor(col);
+                                                                setIsColorDropdownOpen(false);
+                                                            }}
+                                                            className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer capitalize ${selectedColor === col
+                                                                    ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                                    : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                                }`}
+                                                        >
+                                                            {col}
+                                                        </button>
+                                                    ))
+                                                )}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         </div>
 
@@ -379,8 +440,8 @@ export default function ProductsClient({
                                                         setIsSortDropdownOpen(false);
                                                     }}
                                                     className={`w-full text-left px-4 py-3 text-xs uppercase tracking-widest transition-colors font-semibold cursor-pointer ${sortBy === opt.value
-                                                            ? 'bg-rose-pink/5 text-rose-pink font-bold'
-                                                            : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                        ? 'bg-rose-pink/5 text-rose-pink font-bold'
+                                                        : 'text-dark-gray hover:bg-cream hover:text-gold'
                                                         }`}
                                                 >
                                                     {opt.label}
