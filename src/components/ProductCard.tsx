@@ -41,8 +41,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     // Construct sharing link for WhatsApp enquiry
     const getWhatsAppLink = (prod: Product) => {
-        const text = `Hi AURA Boutique! I am interested in browsing/purchasing: *${prod.name}* (ID: ${prod.id}). \nPrice: ${formatPrice(prod.price)} \nCategory: ${prod.category} \nFabric: ${prod.fabric} \nSelected Size: ${selectedSize} \nSelected Color: ${selectedColor}. \nCould you please share details on availability? Thank you.`;
-        return `https://wa.me/919876543210?text=${encodeURIComponent(text)}`;
+        const text = `Hi Anakh Fashions! I am interested in browsing/purchasing: *${prod.name}* (ID: ${prod.id}). \nPrice: ${formatPrice(prod.price)} \nCategory: ${prod.category} \nFabric: ${prod.fabric} \nSelected Size: ${selectedSize} \nSelected Color: ${selectedColor}. \nCould you please share details on availability? Thank you.`;
+        return `https://wa.me/918304845545?text=${encodeURIComponent(text)}`;
     };
 
     return (
@@ -226,8 +226,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                                                         key={size}
                                                         onClick={() => setSelectedSize(size)}
                                                         className={`w-10 h-10 rounded-full border text-xs font-semibold flex items-center justify-center transition-all ${size === selectedSize
-                                                                ? 'border-rose-pink bg-rose-pink text-white shadow-sm'
-                                                                : 'border-rose-pink/20 hover:border-rose-pink/70 text-dark-gray'
+                                                            ? 'border-rose-pink bg-rose-pink text-white shadow-sm'
+                                                            : 'border-rose-pink/20 hover:border-rose-pink/70 text-dark-gray'
                                                             }`}
                                                     >
                                                         {size}
@@ -247,8 +247,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                                                         key={color}
                                                         onClick={() => setSelectedColor(color)}
                                                         className={`px-3 py-1.5 rounded-full border text-xs font-medium flex items-center gap-1.5 transition-all ${color === selectedColor
-                                                                ? 'border-gold bg-gold text-white shadow-sm'
-                                                                : 'border-rose-pink/10 hover:border-gold/50 text-dark-gray bg-cream'
+                                                            ? 'border-gold bg-gold text-white shadow-sm'
+                                                            : 'border-rose-pink/10 hover:border-gold/50 text-dark-gray bg-cream'
                                                             }`}
                                                     >
                                                         {color === selectedColor && <Check className="w-3 h-3" />}

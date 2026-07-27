@@ -12,7 +12,7 @@ export default function Hero() {
             <div className="absolute inset-0 z-0">
                 <Image
                     src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1920&q=80"
-                    alt="Aura Boutique Premium Banner"
+                    alt="Anakh Fashions Premium Banner"
                     fill
                     priority
                     className="object-cover object-center opacity-40 scale-102"

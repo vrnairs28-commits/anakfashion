@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
+import Testimonials from '@/components/Testimonials';
 import { Phone, ChevronRight, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -29,8 +30,8 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
     };
 
     const getWhatsAppLink = () => {
-        const text = `Hi AURA Boutique! I am interested in details regarding: *${product.name}* (ID: ${product.id}). \nPrice: ${formatPrice(product.price)} \nFabric: ${product.fabric} \nSelected Size: ${selectedSize} \nSelected Color: ${selectedColor}. \nCould you please let me know when it would be available? Thank you.`;
-        return `https://wa.me/919876543210?text=${encodeURIComponent(text)}`;
+        const text = `Hi Anakh Fashions! I am interested in details regarding: *${product.name}* (ID: ${product.id}). \nPrice: ${formatPrice(product.price)} \nFabric: ${product.fabric} \nSelected Size: ${selectedSize} \nSelected Color: ${selectedColor}. \nCould you please let me know when it would be available? Thank you.`;
+        return `https://wa.me/918304845545?text=${encodeURIComponent(text)}`;
     };
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -99,8 +100,8 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
                                     key={idx}
                                     onClick={() => setActiveImageIdx(idx)}
                                     className={`relative w-16 h-20 md:w-20 md:h-24 rounded-xl overflow-hidden bg-cream shrink-0 border-2 transition-all ${idx === activeImageIdx
-                                            ? 'border-rose-pink scale-95 shadow-md'
-                                            : 'border-transparent opacity-80 hover:opacity-100'
+                                        ? 'border-rose-pink scale-95 shadow-md'
+                                        : 'border-transparent opacity-80 hover:opacity-100'
                                         }`}
                                 >
                                     <Image
@@ -124,10 +125,10 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
                                 {product.category}
                             </span>
                             <span className={`text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full border bg-white ${product.availability === 'In Stock'
-                                    ? 'border-emerald-200 text-emerald-700 bg-emerald-50'
-                                    : product.availability === 'Low Stock'
-                                        ? 'border-amber-200 text-amber-700 bg-amber-50'
-                                        : 'border-rose-200 text-rose-700 bg-rose-50'
+                                ? 'border-emerald-200 text-emerald-700 bg-emerald-50'
+                                : product.availability === 'Low Stock'
+                                    ? 'border-amber-200 text-amber-700 bg-amber-50'
+                                    : 'border-rose-200 text-rose-700 bg-rose-50'
                                 }`}>
                                 {product.availability}
                             </span>
@@ -177,8 +178,8 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
                                         className={`w-11 h-11 rounded-full border text-xs font-bold flex items-center justify-center transition-all ${size === selectedSize
-                                                ? 'border-rose-pink bg-rose-pink text-white shadow-sm'
-                                                : 'border-rose-pink/20 text-dark-gray hover:border-rose-pink/60 bg-white'
+                                            ? 'border-rose-pink bg-rose-pink text-white shadow-sm'
+                                            : 'border-rose-pink/20 text-dark-gray hover:border-rose-pink/60 bg-white'
                                             }`}
                                     >
                                         {size}
@@ -198,8 +199,8 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
                                         key={color}
                                         onClick={() => setSelectedColor(color)}
                                         className={`px-4 py-2 border rounded-full text-xs font-semibold flex items-center gap-2 transition-all ${color === selectedColor
-                                                ? 'border-gold bg-gold text-white shadow-sm'
-                                                : 'border-rose-pink/10 text-dark-gray bg-cream hover:border-gold/50'
+                                            ? 'border-gold bg-gold text-white shadow-sm'
+                                            : 'border-rose-pink/10 text-dark-gray bg-cream hover:border-gold/50'
                                             }`}
                                     >
                                         {color === selectedColor && <Check className="w-3 h-3" />}
@@ -247,6 +248,10 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
                     </div>
                 </section>
             )}
+
+            <div className="border-t border-rose-pink/10 pt-20 mt-20">
+                <Testimonials />
+            </div>
         </article>
     );
 }

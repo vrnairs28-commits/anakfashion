@@ -81,9 +81,9 @@ export default function Navbar() {
                         <div className="flex-shrink-0">
                             <Link href="/" className="flex items-center gap-2">
                                 <span className={`font-serif text-2xl lg:text-3xl tracking-widest font-semibold transition-colors duration-300 ${textClass}`}>
-                                    AURA
+                                    Anakh
                                 </span>
-                                <span className="text-gold text-xs tracking-wider uppercase font-sans mt-2">Boutique</span>
+                                <span className="text-gold text-xs tracking-wider uppercase font-sans mt-2">Fashions</span>
                             </Link>
                         </div>
 
@@ -110,7 +110,7 @@ export default function Navbar() {
                         <div className="flex items-center gap-4">
                             {/* WhatsApp Link directly in navbar for premium service touch */}
                             <a
-                                href="https://wa.me/919876543210"
+                                href="https://wa.me/918304845545"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="hidden lg:flex items-center gap-2 px-4 py-2 border border-gold hover:bg-gold hover:shadow-glow text-xs uppercase tracking-widest font-semibold text-gold hover:text-white rounded-full transition-all duration-300"
@@ -194,8 +194,8 @@ export default function Navbar() {
                         >
                             <div className="flex items-center justify-between border-b border-rose-pink/10 pb-4 mb-6">
                                 <div>
-                                    <span className="font-serif text-xl tracking-widest font-semibold text-rose-pink">AURA</span>
-                                    <span className="text-[10px] tracking-wider uppercase text-gold block">Boutique</span>
+                                    <span className="font-serif text-xl tracking-widest font-semibold text-rose-pink">Anakh</span>
+                                    <span className="text-[10px] tracking-wider uppercase text-gold block">Fashions</span>
                                 </div>
                                 <button
                                     onClick={() => setIsMobileMenuOpen(false)}
@@ -230,7 +230,7 @@ export default function Navbar() {
                             <div className="border-t border-rose-pink/10 pt-6 mt-6">
                                 <p className="text-xs text-muted-gray mb-4">Want personalized designer consultation?</p>
                                 <a
-                                    href="https://wa.me/919876543210"
+                                    href="https://wa.me/918304845545"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-[#25d366] hover:bg-[#20b857] text-white font-semibold rounded-full shadow-lg transition-transform active:scale-95"

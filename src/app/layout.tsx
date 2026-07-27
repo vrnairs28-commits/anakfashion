@@ -17,8 +17,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Aura Boutique | Modern Luxury Women's Fashion",
+  title: "Anakh Fashions | Modern Luxury Women's Fashion",
   description: "Exquisite women's fashion catalog featuring sarees, kurtis, ethnic wear, and modern dresses.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

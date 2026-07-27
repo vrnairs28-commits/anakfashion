@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: PageProps) {
 
     if (!product) {
         return {
-            title: 'Aura Boutique | Product Not Found',
+            title: 'Anakh Fashions | Product Not Found',
             description: 'The requested luxury ensemble could not be found in our catalog.',
         };
     }
 
     return {
-        title: `${product.name} - ${product.category} | AURA Boutique`,
+        title: `${product.name} - ${product.category} | Anakh Fashions`,
         description: `${product.description} Fabric: ${product.fabric}. Sizing: ${product.sizes.join(', ')}.`,
     };
 }

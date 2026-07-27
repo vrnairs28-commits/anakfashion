@@ -17,21 +17,21 @@ const testimonials: Testimonial[] = [
         id: 1,
         name: "Aparna Sharma",
         role: "Regular Customer",
-        quote: "The Banarasi Silk Saree I ordered from Aura Boutique was breathtaking. The weave was flawless, and the drape felt incredibly luxurious. I received so many compliments at my daughter's wedding!",
+        quote: "The Banarasi Silk Saree I ordered from Anakh Fashions was breathtaking. The weave was flawless, and the drape felt incredibly luxurious. I received so many compliments at my daughter's wedding!",
         rating: 5
     },
     {
         id: 2,
         name: "Meera Krishnan",
         role: "Bridal Wear Client",
-        quote: "Finding authentic patterns that speak to modern aesthetics was hard until I found Aura. Their custom sizing options and help on WhatsApp made buying stress-free. Absolutely recommend the Anarkali sets!",
+        quote: "Finding authentic patterns that speak to modern aesthetics was hard until I found Anakh Fashions. Their custom sizing options and help on WhatsApp made buying stress-free. Absolutely recommend the Anarkali sets!",
         rating: 5
     },
     {
         id: 3,
         name: "Priyanka Sen",
         role: "Fashion Blogger",
-        quote: "Aura Boutique is a hidden gem. The quality of fabric matches premium designer labels at a fraction of the cost. The organic linen collections are my absolute favorite for summer styling.",
+        quote: "Anakh Fashions is a hidden gem. The quality of fabric matches premium designer labels at a fraction of the cost. The organic linen collections are my absolute favorite for summer styling.",
         rating: 5
     },
     {
@@ -131,8 +131,8 @@ export default function Testimonials() {
                             key={idx}
                             onClick={() => setActiveIdx(idx)}
                             className={`w-2.5 h-2.5 rounded-full transition-all duration-350 ${idx === activeIdx
-                                    ? 'bg-rose-pink w-6 shadow-sm scale-110'
-                                    : 'bg-rose-pink/20 hover:bg-rose-pink/40'
+                                ? 'bg-rose-pink w-6 shadow-sm scale-110'
+                                : 'bg-rose-pink/20 hover:bg-rose-pink/40'
                                 }`}
                             aria-label={`Go to slide ${idx + 1}`}
                         />

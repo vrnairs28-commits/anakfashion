@@ -55,7 +55,7 @@ export default function InstagramGallery() {
                         Follow Our Journey
                     </span>
                     <h2 className="font-serif text-3xl md:text-4xl text-dark-gray font-bold mb-4">
-                        @AuraBoutique.Official
+                        @anakhfashion9
                     </h2>
                     <p className="text-sm text-muted-gray max-w-md mx-auto font-light">
                         Stay updated with our latest design launches, behind-the-scenes stories, and community events on Instagram.
@@ -67,7 +67,7 @@ export default function InstagramGallery() {
                     {instaPosts.map((post) => (
                         <a
                             key={post.id}
-                            href="https://instagram.com"
+                            href="https://instagram.com/anakhfashion9"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="relative aspect-square rounded-2xl overflow-hidden group shadow-sm hover:shadow-lg bg-cream"

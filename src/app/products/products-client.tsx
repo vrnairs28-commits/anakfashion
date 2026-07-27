@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
-import { Search, SlidersHorizontal, ArrowUpDown, Grid, List, RefreshCw, X, ChevronDown } from 'lucide-react';
+import { Search, SlidersHorizontal, Grid, List, RefreshCw, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductsClientProps {
@@ -32,6 +32,25 @@ export default function ProductsClient({
     const [isGridMode, setIsGridMode] = useState(true);
     const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
     const [visibleCount, setVisibleCount] = useState(8);
+
+    // Custom Dropdown refs & open states
+    const [isFabricDropdownOpen, setIsFabricDropdownOpen] = useState(false);
+    const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
+    const fabricRef = useRef<HTMLDivElement>(null);
+    const sortRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (fabricRef.current && !fabricRef.current.contains(event.target as Node)) {
+                setIsFabricDropdownOpen(false);
+            }
+            if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
+                setIsSortDropdownOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     // Derive filter options dynamically from data
     const categories = useMemo(() => {
@@ -192,19 +211,57 @@ export default function ProductsClient({
                         </div>
 
                         {/* Fabrics */}
-                        <div className="mb-6">
+                        <div className="mb-6" ref={fabricRef}>
                             <h4 className="text-xs uppercase tracking-widest font-bold text-gold mb-3">Fabrics</h4>
-                            <div className="flex flex-col gap-2">
-                                <select
-                                    value={selectedFabric}
-                                    onChange={(e) => setSelectedFabric(e.target.value)}
-                                    className="w-full bg-white border border-rose-pink/10 rounded-lg p-2 text-sm text-dark-gray focus:outline-none focus:border-rose-pink"
+                            <div className="flex flex-col gap-2 relative">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsFabricDropdownOpen(!isFabricDropdownOpen)}
+                                    className="w-full flex items-center justify-between bg-white border border-rose-pink/10 hover:border-gold rounded-lg p-2.5 text-sm text-dark-gray focus:outline-none transition-all cursor-pointer"
                                 >
-                                    <option value="">All Fabrics</option>
-                                    {fabrics.map(fab => (
-                                        <option key={fab} value={fab}>{fab}</option>
-                                    ))}
-                                </select>
+                                    <span>{selectedFabric || 'All Fabrics'}</span>
+                                    <ChevronDown className={`w-4 h-4 text-gold transition-transform duration-300 ${isFabricDropdownOpen ? 'rotate-180' : ''}`} />
+                                </button>
+                                <AnimatePresence>
+                                    {isFabricDropdownOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 5 }}
+                                            className="absolute left-0 right-0 mt-12 max-h-60 overflow-y-auto bg-white border border-rose-pink/15 rounded-lg shadow-xl z-30"
+                                        >
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedFabric('');
+                                                    setIsFabricDropdownOpen(false);
+                                                }}
+                                                className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${selectedFabric === ''
+                                                        ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                        : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                    }`}
+                                            >
+                                                All Fabrics
+                                            </button>
+                                            {fabrics.map(fab => (
+                                                <button
+                                                    key={fab}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSelectedFabric(fab);
+                                                        setIsFabricDropdownOpen(false);
+                                                    }}
+                                                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${selectedFabric === fab
+                                                            ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                            : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                        }`}
+                                                >
+                                                    {fab}
+                                                </button>
+                                            ))}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         </div>
 
@@ -285,18 +342,53 @@ export default function ProductsClient({
                             </button>
 
                             {/* Sort selector */}
-                            <div className="relative">
-                                <select
-                                    value={sortBy}
-                                    onChange={(e) => setSortBy(e.target.value)}
-                                    className="appearance-none bg-white border border-rose-pink/10 hover:border-rose-pink rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold uppercase tracking-widest text-dark-gray focus:outline-none transition-colors"
+                            <div className="relative" ref={sortRef}>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
+                                    className="flex items-center justify-between gap-3 bg-white border border-rose-pink/10 hover:border-gold rounded-xl pl-4 pr-12 py-2.5 text-xs font-semibold uppercase tracking-widest text-dark-gray focus:outline-none transition-all active:scale-98 cursor-pointer min-w-[170px]"
                                 >
-                                    <option value="newest">Newest First</option>
-                                    <option value="price-asc">Price: Low to High</option>
-                                    <option value="price-desc">Price: High to Low</option>
-                                    <option value="name-asc">Alphabetical A-Z</option>
-                                </select>
-                                <ArrowUpDown className="w-3.5 h-3.5 text-gold absolute right-3 top-3.5 pointer-events-none" />
+                                    <span>
+                                        {sortBy === 'newest' && 'Newest First'}
+                                        {sortBy === 'price-asc' && 'Price: Low to High'}
+                                        {sortBy === 'price-desc' && 'Price: High to Low'}
+                                        {sortBy === 'name-asc' && 'Alphabetical A-Z'}
+                                    </span>
+                                    <ChevronDown className={`w-3.5 h-3.5 text-gold absolute right-3.5 transition-transform duration-300 ${isSortDropdownOpen ? 'rotate-180' : ''}`} />
+                                </button>
+
+                                <AnimatePresence>
+                                    {isSortDropdownOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 10 }}
+                                            className="absolute right-0 mt-2 w-48 bg-white border border-rose-pink/15 rounded-xl shadow-xl z-30 overflow-hidden"
+                                        >
+                                            {[
+                                                { value: 'newest', label: 'Newest/Latest Drop' },
+                                                { value: 'price-asc', label: 'Price: Low to High' },
+                                                { value: 'price-desc', label: 'Price: High to Low' },
+                                                { value: 'name-asc', label: 'Alphabetical A-Z' }
+                                            ].map(opt => (
+                                                <button
+                                                    key={opt.value}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSortBy(opt.value);
+                                                        setIsSortDropdownOpen(false);
+                                                    }}
+                                                    className={`w-full text-left px-4 py-3 text-xs uppercase tracking-widest transition-colors font-semibold cursor-pointer ${sortBy === opt.value
+                                                            ? 'bg-rose-pink/5 text-rose-pink font-bold'
+                                                            : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                        }`}
+                                                >
+                                                    {opt.label}
+                                                </button>
+                                            ))}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
 
                             {/* Grid / List Toggler */}

@@ -209,7 +209,7 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-gold text-xs uppercase tracking-widest font-semibold mb-2 block">
-              The Aura Distinction
+              The Anakh Distinction
             </span>
             <h2 className="font-serif text-3xl md:text-5xl text-dark-gray font-bold">
               Why Shop With Us
@@ -239,6 +239,40 @@ export default async function Home() {
 
       {/* 6. Testimonials */}
       <Testimonials />
+
+      {/* WhatsApp Community Banner */}
+      <section className="py-20 bg-cream">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#25d366]/10 border border-[#25d366]/30 mb-6">
+            <svg
+              className="w-8 h-8 text-[#25d366] fill-[#25d366]"
+              viewBox="0 0 24 24"
+            >
+              <path d="M.03 24l1.69-6.19C.63 15.65 0 13.38 0 11 0 4.93 4.93 0 11 0s11 4.93 11 11-4.93 11-11 11c-2.18 0-4.31-.64-6.13-1.85L0 24zm6.09-3.73l.36.21c1.4.83 3.02 1.27 4.67 1.27 4.98 0 9.04-4.05 9.04-9.04S16.03 3.67 11 3.67 1.96 7.73 1.96 12.72c0 1.83.55 3.61 1.59 5.11l.24.35-.99 3.62 3.73-.97zM15.82 14c-.21-.1-.72-.37-.82-.4-.1-.03-.23-.1-.33.07-.1.17-.4.5-.49.6-.09.1-.19.1-.4 0-.48-.22-.92-.47-1.3-0.81-.3-.27-.58-.58-.87-.9-.1-.2-.02-.3.07-.4.09-.09.2-.23.3-.35.09-.12.13-.2.2-.33.07-.13.03-.25-.02-.35-.05-.1-.45-1.07-.63-1.5-.17-.41-.35-.35-.49-.36h-.41c-.13 0-.35.05-.53.25-.19.2-.72.69-.72 1.69s.73 1.97.83 2.11c.1.14 1.43 2.18 3.47 3.06.49.21.87.34 1.16.43.49.16.94.13 1.29.08.39-.06.82-.33.94-.65.12-.32.12-.6.08-.65-.03-.06-.11-.1-.32-.2z" />
+            </svg>
+          </div>
+          <h2 className="font-serif text-3xl md:text-4xl text-dark-gray font-bold mb-4">
+            Join the Anakh Fashions Community
+          </h2>
+          <p className="text-sm text-[#4d4d4d] max-w-lg mx-auto font-light mb-8 leading-relaxed">
+            Gain early access to new curated handloom drops, custom weaving events, styling sessions, and private collections before they sell out.
+          </p>
+          <a
+            href="https://chat.whatsapp.com/KBmmvFDvVVl4rr809cVGkP?s=cl&p=a&ilr=2&amv=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#25d366] hover:bg-[#20b857] text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-98 cursor-pointer"
+          >
+            <span>Preview & Join Community</span>
+            <svg
+              className="w-4 h-4 fill-white"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2A10 10 0 0 0 2 12a9.9 9.9 0 0 0 1.5 5.2L2 22l5-1.5A9.9 9.9 0 0 0 12 22a10 10 0 0 0 10-10A10 10 0 0 0 12 2zM12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8 7.9 7.9 0 0 1-4.2-1.2l-3 1 1-3A7.9 7.9 0 0 1 4 12c0-4.4 3.6-8 8-8z" />
+            </svg>
+          </a>
+        </div>
+      </section>
 
       {/* 7. Instagram Style Gallery */}
       <InstagramGallery />
