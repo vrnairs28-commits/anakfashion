@@ -159,7 +159,7 @@ export default function ProductsClient({
             <div className="flex flex-col lg:flex-row gap-8">
                 {/* FILTERS PANEL (Desktop Sidebar & Responsive Mobile Drawer) */}
                 <aside className={`w-full lg:w-64 shrink-0 lg:block ${isFilterSidebarOpen ? 'block' : 'hidden md:hidden lg:block'}`}>
-                    <div className="bg-cream/40 border border-rose-pink/5 rounded-2xl p-6 sticky top-28">
+                    <div className="bg-cream/40 border border-rose-pink/5 rounded-2xl p-6 sticky top-28 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto no-scrollbar">
                         <div className="flex items-center justify-between border-b border-rose-pink/10 pb-4 mb-6">
                             <h3 className="font-serif text-lg font-bold text-dark-gray flex items-center gap-2">
                                 <SlidersHorizontal className="w-4 h-4 text-gold" />
@@ -321,8 +321,8 @@ export default function ProductsClient({
                                                         setIsColorDropdownOpen(false);
                                                     }}
                                                     className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${selectedColor === ''
-                                                            ? 'bg-rose-pink/5 text-rose-pink font-semibold'
-                                                            : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                        ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                        : 'text-dark-gray hover:bg-cream hover:text-gold'
                                                         }`}
                                                 >
                                                     All Colors
@@ -339,8 +339,8 @@ export default function ProductsClient({
                                                                 setIsColorDropdownOpen(false);
                                                             }}
                                                             className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer capitalize ${selectedColor === col
-                                                                    ? 'bg-rose-pink/5 text-rose-pink font-semibold'
-                                                                    : 'text-dark-gray hover:bg-cream hover:text-gold'
+                                                                ? 'bg-rose-pink/5 text-rose-pink font-semibold'
+                                                                : 'text-dark-gray hover:bg-cream hover:text-gold'
                                                                 }`}
                                                         >
                                                             {col}

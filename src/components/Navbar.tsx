@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Search, Menu, X, ArrowRight, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -79,11 +80,20 @@ export default function Navbar() {
                     <div className="flex items-center justify-between h-20">
                         {/* Logo */}
                         <div className="flex-shrink-0">
-                            <Link href="/" className="flex items-center gap-2">
-                                <span className={`font-serif text-2xl lg:text-3xl tracking-widest font-semibold transition-colors duration-300 ${textClass}`}>
-                                    Anakh
-                                </span>
-                                <span className="text-gold text-xs tracking-wider uppercase font-sans mt-2">Fashions</span>
+                            <Link href="/" className="flex items-center gap-1.5">
+                                <Image
+                                    src="/logo.png"
+                                    alt="Anakh Fashions Logo"
+                                    width={72}
+                                    height={72}
+                                    className="w-18 h-18 object-contain"
+                                />
+                                <div className="flex items-baseline gap-1">
+                                    <span className={`font-serif text-2xl lg:text-3xl tracking-widest font-semibold transition-colors duration-300 ${textClass}`}>
+                                        Anakh
+                                    </span>
+                                    <span className="text-gold text-xs tracking-wider uppercase font-sans">Fashions</span>
+                                </div>
                             </Link>
                         </div>
 
@@ -193,10 +203,19 @@ export default function Navbar() {
                             className="fixed top-0 right-0 bottom-0 w-80 max-w-full bg-cream shadow-2xl z-50 flex flex-col p-6 overflow-y-auto"
                         >
                             <div className="flex items-center justify-between border-b border-rose-pink/10 pb-4 mb-6">
-                                <div>
-                                    <span className="font-serif text-xl tracking-widest font-semibold text-rose-pink">Anakh</span>
-                                    <span className="text-[10px] tracking-wider uppercase text-gold block">Fashions</span>
-                                </div>
+                                <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-1.5 focus:outline-none">
+                                    <Image
+                                        src="/logo.png"
+                                        alt="Anakh Fashions Logo"
+                                        width={56}
+                                        height={56}
+                                        className="w-14 h-14 object-contain"
+                                    />
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="font-serif text-xl tracking-widest font-semibold text-rose-pink">Anakh</span>
+                                        <span className="text-[10px] tracking-wider uppercase text-gold">Fashions</span>
+                                    </div>
+                                </Link>
                                 <button
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="p-2 text-dark-gray hover:text-rose-pink rounded-full hover:bg-rose-pink/5"

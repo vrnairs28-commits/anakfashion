@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Product } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Eye, ArrowRight, Check, ShoppingBag, Phone } from 'lucide-react';
+import { X, Eye, ArrowRight, Check, ShoppingBag, Phone, Share2 } from 'lucide-react';
 
 interface ProductCardProps {
     product: Product;
@@ -16,6 +16,18 @@ export default function ProductCard({ product }: ProductCardProps) {
     const [selectedSize, setSelectedSize] = useState(product.sizes[0] || 'One Size');
     const [selectedColor, setSelectedColor] = useState(product.colors[0] || '');
     const [activeImageIdx, setActiveImageIdx] = useState(0);
+    const [copied, setCopied] = useState(false);
+
+    const handleShare = async () => {
+        try {
+            const shareUrl = `${window.location.origin}/products/${product.id}`;
+            await navigator.clipboard.writeText(shareUrl);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    };
 
     // Format currency
     const formatPrice = (price: number) => {
@@ -260,27 +272,45 @@ export default function ProductCard({ product }: ProductCardProps) {
                                     )}
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row gap-3 border-t border-rose-pink/5 pt-6 mt-4">
-                                    {/* WhatsApp Quick Enquiry */}
-                                    <a
-                                        href={getWhatsAppLink(product)}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex-grow flex items-center justify-center gap-3 px-6 py-3.5 bg-[#25d366] hover:bg-[#20b857] text-white font-semibold rounded-full shadow-lg transition-transform active:scale-95"
-                                    >
-                                        <Phone className="w-4 h-4" />
-                                        <span className="text-xs uppercase tracking-widest">Enquire via WhatsApp</span>
-                                    </a>
+                                <div className="flex flex-col gap-3 border-t border-rose-pink/5 pt-6 mt-4">
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        {/* WhatsApp Quick Enquiry */}
+                                        <a
+                                            href={getWhatsAppLink(product)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex-grow flex items-center justify-center gap-3 px-6 py-3.5 bg-[#25d366] hover:bg-[#20b857] text-white font-semibold rounded-full shadow-lg transition-transform active:scale-95 cursor-pointer"
+                                        >
+                                            <Phone className="w-4 h-4" />
+                                            <span className="text-xs uppercase tracking-widest text-center">Enquire via WhatsApp</span>
+                                        </a>
 
-                                    {/* View Full Product Details Link */}
-                                    <Link
-                                        href={`/products/${product.id}`}
-                                        onClick={() => setIsQuickViewOpen(false)}
-                                        className="flex items-center justify-center gap-2 px-6 py-3.5 border border-gold text-gold hover:bg-gold hover:text-white font-semibold rounded-full tracking-widest text-xs uppercase transition-all duration-300"
+                                        {/* View Full Product Details Link */}
+                                        <Link
+                                            href={`/products/${product.id}`}
+                                            onClick={() => setIsQuickViewOpen(false)}
+                                            className="flex items-center justify-center gap-2 px-6 py-3.5 border border-gold text-gold hover:bg-gold hover:text-white font-semibold rounded-full tracking-widest text-xs uppercase transition-all duration-300 cursor-pointer"
+                                        >
+                                            <span className="text-center">Full Details</span>
+                                            <ArrowRight className="w-4 h-4" />
+                                        </Link>
+                                    </div>
+                                    <button
+                                        onClick={handleShare}
+                                        className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-rose-pink/25 hover:border-gold text-muted-gray hover:text-gold bg-cream/45 hover:bg-cream font-semibold rounded-full tracking-widest text-xs uppercase transition-all duration-300 active:scale-95 cursor-pointer"
                                     >
-                                        <span>Full Details</span>
-                                        <ArrowRight className="w-4 h-4" />
-                                    </Link>
+                                        {copied ? (
+                                            <>
+                                                <Check className="w-4 h-4 text-emerald-500" />
+                                                <span>Copied Link!</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Share2 className="w-4 h-4" />
+                                                <span>Share Product Link</span>
+                                            </>
+                                        )}
+                                    </button>
                                 </div>
                             </div>
                         </motion.div>

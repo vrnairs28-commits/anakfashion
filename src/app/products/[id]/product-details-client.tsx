@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
 import Testimonials from '@/components/Testimonials';
-import { Phone, ChevronRight, Check } from 'lucide-react';
+import { Phone, ChevronRight, Check, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface ProductDetailsClientProps {
@@ -20,6 +20,18 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
     const [selectedColor, setSelectedColor] = useState(product.colors[0] || '');
     const [isZoomed, setIsZoomed] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [copied, setCopied] = useState(false);
+
+    const handleShare = async () => {
+        try {
+            const shareUrl = `${window.location.origin}/products/${product.id}`;
+            await navigator.clipboard.writeText(shareUrl);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    };
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('en-IN', {
@@ -211,20 +223,38 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
                         </div>
                     )}
 
-                    {/* CTA WhatsApp Buttons */}
+                    {/* CTA WhatsApp & Share Buttons */}
                     <div className="border-t border-rose-pink/10 pt-6 mt-4">
                         <p className="text-xs text-muted-gray mb-3 italic">
-                            Notice something you love? Connect with our personal stylist directly via WhatsApp for measurements and inquiries.
+                            Notice something you love? Connect with our personal stylist directly via WhatsApp or share the product layout options.
                         </p>
-                        <a
-                            href={getWhatsAppLink()}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#25d366] hover:bg-[#20b857] text-white font-bold rounded-full transition-transform active:scale-98 shadow-lg hover:shadow-xl"
-                        >
-                            <Phone className="w-5 h-5 fill-white text-[#25d366]" />
-                            <span className="text-xs uppercase tracking-widest">Inquire Sizing & Availability</span>
-                        </a>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <a
+                                href={getWhatsAppLink()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-grow flex items-center justify-center gap-3 px-6 py-4 bg-[#25d366] hover:bg-[#20b857] text-white font-bold rounded-full transition-transform active:scale-98 shadow-lg hover:shadow-xl cursor-pointer"
+                            >
+                                <Phone className="w-5 h-5 fill-white text-[#25d366]" />
+                                <span className="text-xs uppercase tracking-widest">Inquire Sizing</span>
+                            </a>
+                            <button
+                                onClick={handleShare}
+                                className="flex items-center justify-center gap-2 px-6 py-4 border border-gold hover:bg-gold text-gold hover:text-white font-bold rounded-full transition-all active:scale-98 cursor-pointer"
+                            >
+                                {copied ? (
+                                    <>
+                                        <Check className="w-5 h-5" />
+                                        <span className="text-xs uppercase tracking-widest">Copied Link!</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Share2 className="w-5 h-5" />
+                                        <span className="text-xs uppercase tracking-widest">Share Product</span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

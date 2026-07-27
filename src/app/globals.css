@@ -3,7 +3,7 @@
 @theme {
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
-  
+
   --color-rose-pink: #d88f98;
   --color-rose-pink-dark: #b5767e;
   --color-cream: #faf6f0;
@@ -26,7 +26,13 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6, .font-serif {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-serif {
   font-family: var(--font-playfair), serif;
 }
 
@@ -35,13 +41,16 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #faf6f0;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #c5a880;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #b3946a;
 }
@@ -59,3 +68,15 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
